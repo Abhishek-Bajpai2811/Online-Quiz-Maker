@@ -1,0 +1,65 @@
+let questions = [];
+
+function addQuestion() {
+    const question = document.getElementById('question').value;
+    const options = [
+        document.getElementById('option1').value,
+        document.getElementById('option2').value,
+        document.getElementById('option3').value,
+        document.getElementById('option4').value
+    ];
+    const correctOption = parseInt(document.getElementById('correct-option').value) - 1;
+    
+    questions.push({ question, options, correctOption });
+    
+    document.getElementById('quiz-form').reset();
+    displayQuiz();
+}
+
+function displayQuiz() {
+    const quizDiv = document.getElementById('quiz');
+    quizDiv.innerHTML = '';
+    
+    questions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        
+        const questionText = document.createElement('p');
+        questionText.innerText = q.question;
+        questionDiv.appendChild(questionText);
+        
+        q.options.forEach((option, i) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.classList.add('option');
+            
+            const optionInput = document.createElement('input');
+            optionInput.type = 'radio';
+            optionInput.name = question${index};
+            optionInput.value = i;
+            optionDiv.appendChild(optionInput);
+            
+            const optionLabel = document.createElement('label');
+            optionLabel.innerText = option;
+            optionDiv.appendChild(optionLabel);
+            
+            questionDiv.appendChild(optionDiv);
+        });
+        
+        quizDiv.appendChild(questionDiv);
+    });
+}
+
+function submitQuiz() {
+    let score = 0;
+    
+    questions.forEach((q, index) => {
+        const selectedOption = document.querySelector(input[name="question${index}"]:checked);
+        
+        if (selectedOption && parseInt(selectedOption.value) === q.correctOption) {
+            score++;
+        }
+    });
+    
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = You scored ${score} out of ${questions.length};
+}
